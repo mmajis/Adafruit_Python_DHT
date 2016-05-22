@@ -22,6 +22,9 @@ elif '--force-pi2' in sys.argv:
 elif '--force-bbb' in sys.argv:
     platform = platform_detect.BEAGLEBONE_BLACK
     sys.argv.remove('--force-bbb')
+elif '--force-96b' in sys.argv:
+    platform = platform_detect.NINETY6BOARDS
+    sys.argv.remove('--force-96b')
 elif '--force-test' in sys.argv:
     platform = 'TEST'
     sys.argv.remove('--force-test')
@@ -53,12 +56,17 @@ elif platform == platform_detect.BEAGLEBONE_BLACK:
                                 ["source/_Beaglebone_Black_Driver.c", "source/common_dht_read.c", "source/Beaglebone_Black/bbb_dht_read.c", "source/Beaglebone_Black/bbb_mmio.c"],
                                 libraries=['rt'],
                                 extra_compile_args=['-std=gnu99']))
+elif platform == platform_detect.NINETY6BOARDS
+    extensions.append(Extension("Adafruit_DHT.Ninety6B_Driver",
+                                ["source/_96B_Driver.c", "source/common_dht_read.c", "source/96Boards/96b_dht_read.c"],
+                                libraries=['rt'],
+                                extra_compile_args=['-std=gnu99']))
 elif platform == 'TEST':
     extensions.append(Extension("Adafruit_DHT.Test_Driver",
                                 ["source/_Test_Driver.c", "source/Test/test_dht_read.c"],
                                 extra_compile_args=['-std=gnu99']))
 else:
-    print('Could not detect if running on the Raspberry Pi or Beaglebone Black.  If this failure is unexpected, you can run again with --force-pi or --force-bbb parameter to force using the Raspberry Pi or Beaglebone Black respectively.')
+    print('Could not detect if running on the Raspberry Pi, Beaglebone Black or a 96Boards device.  If this failure is unexpected, you can run again with --force-pi, --force-bbb or --force-96b parameter to force using a specific board.')
     sys.exit(1)
 
 classifiers = ['Development Status :: 4 - Beta',
@@ -75,7 +83,7 @@ setup(name              = 'Adafruit_DHT',
       version           = '1.2.0',
       author            = 'Tony DiCola',
       author_email      = 'tdicola@adafruit.com',
-      description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi or Beaglebone Black.',
+      description       = 'Library to get readings from the DHT11, DHT22, and AM2302 humidity and temperature sensors on a Raspberry Pi, Beaglebone Black or a 96Boards device.',
       license           = 'MIT',
 	  classifiers       = classifiers,
       url               = 'https://github.com/adafruit/Adafruit_Python_DHT/',
