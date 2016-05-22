@@ -46,6 +46,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
 
   // Initialize the pin
   unsigned int gpio = gpio_by_pin(pin);
+  printf("About to open pin %s which was mapped to gpio %s\n", pin, gpio);
 
   // Store the count that each DHT bit pulse is low and high.
   // Make sure array is initialized to start at zero.
@@ -80,7 +81,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Wait for DHT to pull pin low.
   uint32_t count = 0;
   int read_result = 0;
-  while (read_result = digitalRead(pin)) {
+  while (read_result = digitalRead(gpio)) {
     if (count % 100000 == 0) {
       printf("Waiting to go low, value is: %d, count: %d\n", read_result, count);
     }
