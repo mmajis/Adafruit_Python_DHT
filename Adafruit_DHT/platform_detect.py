@@ -31,6 +31,7 @@ import re
 UNKNOWN          = 0
 RASPBERRY_PI     = 1
 BEAGLEBONE_BLACK = 2
+NINETY6BOARDS    = 3
 
 
 def platform_detect():
@@ -41,8 +42,9 @@ def platform_detect():
     if pi is not None:
         return RASPBERRY_PI
 
-    # Handle Beaglebone Black
+    # Handle Beaglebone Black And 96Boards
     # TODO: Check the Beaglebone Black /proc/cpuinfo value instead of reading
+    # TODO: For 96Boards, maybe detect libsoc and then board config from there...
     # the platform.
     plat = platform.platform()
     if plat.lower().find('armv7l-with-debian') > -1:
@@ -51,7 +53,9 @@ def platform_detect():
         return BEAGLEBONE_BLACK
     elif plat.lower().find('armv7l-with-glibc2.4') > -1:
         return BEAGLEBONE_BLACK
-    
+    elif plat.lower().find('linaro') > -1:
+        return NINETY6BOARDS
+
     # Couldn't figure out the platform, just return unknown.
     return UNKNOWN
 

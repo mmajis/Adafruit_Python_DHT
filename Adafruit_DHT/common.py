@@ -1,4 +1,4 @@
-# Copyright (c) 2014 Adafruit Industries
+ # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -55,6 +55,9 @@ def get_platform():
     elif plat == platform_detect.BEAGLEBONE_BLACK:
         from . import Beaglebone_Black
         return Beaglebone_Black
+    elif plat == platform_detect.NINETY6BOARDS:
+        from . import Ninety6Boards
+        return Ninety6Boards
     else:
         raise RuntimeError('Unknown platform.')
 
