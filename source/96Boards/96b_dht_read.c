@@ -70,7 +70,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   busy_wait_milliseconds(20);
 
   // Set pin at input.
-  if (gpio_open(gpio, "out")) {
+  if (gpio_open(gpio, "in")) {
   	return DHT_ERROR_GPIO;
   }
   // Need a very short delay before reading pins or else value is sometimes still low.
@@ -83,6 +83,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   while (read_result = digitalRead(pin)) {
     if (++count >= DHT_MAXCOUNT) {
       // Timeout waiting for response.
+      printf("Timeout waiting for DHT to pull pin low");
       set_default_priority();
       return DHT_ERROR_TIMEOUT;
     }
@@ -100,6 +101,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
     while ((read_result = digitalRead(gpio)) == 0) {
       if (++pulseCounts[i] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
+        printf("Timeout waiting for low part of pulse");
         set_default_priority();
         return DHT_ERROR_TIMEOUT;
       }
@@ -114,6 +116,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
     while ((read_result = digitalRead(gpio)) == 1) {
       if (++pulseCounts[i+1] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
+        printf("Timeout waiting for high part of pulse");
         set_default_priority();
         return DHT_ERROR_TIMEOUT;
       }
