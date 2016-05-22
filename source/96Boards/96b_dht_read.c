@@ -21,9 +21,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <gpio.h>
 
 #include "96b_dht_read.h"
-#include "gpio.h"
 
 // This is the only processor specific magic value, the maximum amount of time to
 // spin in a loop before bailing out and considering the read a timeout.  This should
