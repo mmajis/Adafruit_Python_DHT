@@ -29,6 +29,7 @@ def read(sensor, pin):
     result, humidity, temp = driver.read(sensor, int(pin))
     if result in common.TRANSIENT_ERRORS:
         # Signal no result could be obtained, but the caller can retry.
+        print "Result error: %s" % result
         return (None, None)
     elif result == common.DHT_ERROR_GPIO:
         raise RuntimeError('Error accessing GPIO. Make sure program is run as root with sudo!')
