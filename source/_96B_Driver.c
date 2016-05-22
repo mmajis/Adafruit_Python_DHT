@@ -32,7 +32,7 @@ static PyObject* Ninety6B_Driver_read(PyObject *self, PyObject *args)
     }
     // Call dht_read and return result code, humidity, and temperature.
     float humidity = 0, temperature = 0;
-    int result = pi_2_dht_read(sensor, pin, &humidity, &temperature);
+    int result = ninety6b_dht_read(sensor, pin, &humidity, &temperature);
     return Py_BuildValue("iff", result, humidity, temperature);
 }
 
