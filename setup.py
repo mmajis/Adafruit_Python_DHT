@@ -56,7 +56,7 @@ elif platform == platform_detect.BEAGLEBONE_BLACK:
                                 ["source/_Beaglebone_Black_Driver.c", "source/common_dht_read.c", "source/Beaglebone_Black/bbb_dht_read.c", "source/Beaglebone_Black/bbb_mmio.c"],
                                 libraries=['rt'],
                                 extra_compile_args=['-std=gnu99']))
-elif platform == platform_detect.NINETY6BOARDS
+elif platform == platform_detect.NINETY6BOARDS:
     extensions.append(Extension("Adafruit_DHT.Ninety6B_Driver",
                                 ["source/_96B_Driver.c", "source/common_dht_read.c", "source/96Boards/96b_dht_read.c"],
                                 libraries=['rt'],
