@@ -20,6 +20,7 @@
 // SOFTWARE.
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "96b_dht_read.h"
 #include "gpio.h"
