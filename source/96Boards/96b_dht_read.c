@@ -86,7 +86,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
     }
     if (++count >= DHT_MAXCOUNT) {
       // Timeout waiting for response.
-      printf("Timeout waiting for DHT to pull pin low");
+      printf("Timeout waiting for DHT to pull pin low\n");
       set_default_priority();
       return DHT_ERROR_TIMEOUT;
     }
