@@ -29,7 +29,7 @@
 // spin in a loop before bailing out and considering the read a timeout.  This should
 // be a high value, but if you're running on a much faster platform than a Raspberry
 // Pi or Beaglebone Black then it might need to be increased.
-#define DHT_MAXCOUNT 320000
+#define DHT_MAXCOUNT 999999
 
 // Number of bit pulses to expect from the DHT.  Note that this is 41 because
 // the first pulse is a constant 50 microsecond pulse, with 40 pulses to represent
@@ -81,6 +81,9 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   uint32_t count = 0;
   int read_result = 0;
   while (read_result = digitalRead(pin)) {
+    if (count % 1000 == 0) {
+      printf("Waiting to go low, value is: %d, count: %d", read_result, count);
+    }
     if (++count >= DHT_MAXCOUNT) {
       // Timeout waiting for response.
       printf("Timeout waiting for DHT to pull pin low");
