@@ -81,8 +81,8 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   uint32_t count = 0;
   int read_result = 0;
   while (read_result = digitalRead(pin)) {
-    if (count % 1000 == 0) {
-      printf("Waiting to go low, value is: %d, count: %d", read_result, count);
+    if (count % 100000 == 0) {
+      printf("Waiting to go low, value is: %d, count: %d\n", read_result, count);
     }
     if (++count >= DHT_MAXCOUNT) {
       // Timeout waiting for response.
