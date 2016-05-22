@@ -59,7 +59,7 @@ elif platform == platform_detect.BEAGLEBONE_BLACK:
 elif platform == platform_detect.NINETY6BOARDS:
     extensions.append(Extension("Adafruit_DHT.Ninety6B_Driver",
                                 ["source/_96B_Driver.c", "source/common_dht_read.c", "source/96Boards/96b_dht_read.c"],
-                                libraries=['rt', 'libsoc', 'lib96BoardsGPIO'],
+                                libraries=['rt', 'soc', '96BoardsGPIO'],
                                 extra_compile_args=['-std=gnu99']))
 elif platform == 'TEST':
     extensions.append(Extension("Adafruit_DHT.Test_Driver",
