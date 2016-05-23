@@ -29,7 +29,7 @@
 // spin in a loop before bailing out and considering the read a timeout.  This should
 // be a high value, but if you're running on a much faster platform than a Raspberry
 // Pi or Beaglebone Black then it might need to be increased.
-#define DHT_MAXCOUNT 999999
+#define DHT_MAXCOUNT 32000
 
 // Number of bit pulses to expect from the DHT.  Note that this is 41 because
 // the first pulse is a constant 50 microsecond pulse, with 40 pulses to represent
@@ -46,7 +46,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
 
   // Initialize the pin
   unsigned int gpio = gpio_by_pin(pin);
-  printf("About to open pin %s which was mapped to gpio %s\n", pin, gpio);
+  //printf("About to open physical pin %d which was mapped to gpio %d\n", pin, gpio);
 
   // Store the count that each DHT bit pulse is low and high.
   // Make sure array is initialized to start at zero.
@@ -82,12 +82,12 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   uint32_t count = 0;
   int read_result = 0;
   while (read_result = digitalRead(gpio)) {
-    if (count % 100000 == 0) {
-      printf("Waiting to go low, value is: %d, count: %d\n", read_result, count);
-    }
+  //    if (count % 1000 == 0) {
+  //      printf("Waiting to go low, value is: %d, count: %u\n", read_result, count);
+  //    }
     if (++count >= DHT_MAXCOUNT) {
       // Timeout waiting for response.
-      printf("Timeout waiting for DHT to pull pin low\n");
+      //printf("Timeout waiting for DHT to pull pin low\n");
       set_default_priority();
       return DHT_ERROR_TIMEOUT;
     }
@@ -105,7 +105,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
     while ((read_result = digitalRead(gpio)) == 0) {
       if (++pulseCounts[i] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
-        printf("Timeout waiting for low part of pulse");
+        //printf("Timeout waiting for low part of pulse\n");
         set_default_priority();
         return DHT_ERROR_TIMEOUT;
       }
@@ -120,7 +120,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
     while ((read_result = digitalRead(gpio)) == 1) {
       if (++pulseCounts[i+1] >= DHT_MAXCOUNT) {
         // Timeout waiting for response.
-        printf("Timeout waiting for high part of pulse");
+        //printf("Timeout waiting for high part of pulse\n");
         set_default_priority();
         return DHT_ERROR_TIMEOUT;
       }
@@ -159,7 +159,7 @@ int ninety6b_dht_read(int type, int pin, float* humidity, float* temperature) {
   }
 
   // Useful debug info:
-  printf("Data: 0x%x 0x%x 0x%x 0x%x 0x%x\n", data[0], data[1], data[2], data[3], data[4]);
+  //printf("Data: 0x%x 0x%x 0x%x 0x%x 0x%x\n", data[0], data[1], data[2], data[3], data[4]);
 
   // Verify checksum of received data.
   if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {
